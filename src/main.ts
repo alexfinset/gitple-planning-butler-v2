@@ -191,22 +191,19 @@ export class GitpleButler {
     });
   }
 
+  private getTextColor(hexColor: string) {
+    // Convert hex color to RGB
+    const r = parseInt(hexColor.substring(0, 2), 16);
+    const g = parseInt(hexColor.substring(2, 4), 16);
+    const b = parseInt(hexColor.substring(4, 6), 16);
+    // Calculate relative luminance of the color
+    const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+    // Determine and return the text color based on the luminance
+    return luminance > 0.5 ? "#000000" : "#FFFFFF";
+  }
+
   private getLabelStyles(labelColor: string) {
-    switch (labelColor) {
-      case "3941AC":
-        return `background-color: #${labelColor}; color: #FFFFFF;`;
-      case "FBCA04":
-        return `background-color: #${labelColor}; color: #000000;`;
-      case "EBEA93":
-        return `background-color: #${labelColor}; color: #000000;`;
-      case "3CCD91":
-        return `background-color: #${labelColor}; color: #000000;`;
-      case "1F78C4":
-        return `background-color: #${labelColor}; color: #FFFFFF;`;
-      case "A45072":
-        return `background-color: #${labelColor}; color: #FFFFFF;`;
-      default:
-        return `background-color: #${labelColor}; color: #FFFFFF";`;
-    }
+    const textColor = this.getTextColor(labelColor);
+    return `background-color: #${labelColor}; color: ${textColor};`;
   }
 }
